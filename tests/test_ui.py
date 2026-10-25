@@ -13,7 +13,7 @@ class DemoStore:
     def references(self, kind):
         return [{'id': 1, 'name': 'Смартфоны' if kind == 'categories' else 'Samsung'}]
     def products(self, *args):
-        return [dict(id=1, name='Samsung Galaxy A55', description='Смартфон для учебного каталога.',
+        return [dict(id=1, name='Samsung Galaxy A55', description='Смартфон.',
                      price=Decimal('34990.00'), stock=12, category_id=1, brand_id=1,
                      category='Смартфоны', brand='Samsung')]
     def specs(self, item_id):
@@ -28,7 +28,7 @@ class InterfaceTests(unittest.TestCase):
         cls.app = QApplication.instance() or QApplication([])
 
     def user(self, role='admin'):
-        return dict(id=1, full_name='Учебный проект', role=role, accent_color='#2563eb')
+        return dict(id=1, full_name='Магазин электроники', role=role, accent_color='#2563eb')
 
     def test_roles_and_catalog(self):
         for role in ('admin', 'customer'):

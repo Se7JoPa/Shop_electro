@@ -1,4 +1,4 @@
-"""Desktop electronics catalogue. Author: Учебный проект."""
+"""Desktop electronics catalogue. Author: Магазин электроники."""
 import sys
 from decimal import Decimal
 import psycopg
@@ -181,7 +181,7 @@ class Catalog(QWidget):
         super().__init__()
         self.store, self.user, self.rows = store, user, []
         self.setObjectName('main')
-        self.setWindowTitle('Магазин электроники | Учебный проект')
+        self.setWindowTitle('Магазин электроники | Магазин электроники')
         self.resize(1150, 720)
         layout = QVBoxLayout(self)
         layout.setContentsMargins(24, 24, 24, 24)

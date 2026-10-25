@@ -13,7 +13,7 @@ if not Path(font_path).is_file():
 pdfmetrics.registerFont(TTFont('ER', font_path))
 c = canvas.Canvas(str(ROOT / 'ER_diagram.pdf'), pagesize=landscape(A4))
 c.setTitle('Магазин электроники - ER-диаграмма')
-c.setAuthor('Учебный проект')
+c.setAuthor('Магазин электроники')
 
 
 def text(x, y, value, size=9, color='#24344b'):
@@ -50,7 +50,7 @@ def connection(points, label, label_x, label_y):
 
 
 text(32, 551, 'Магазин электроники', 24, '#123364')
-text(32, 527, 'ER-диаграмма · PostgreSQL · Учебный проект', 11)
+text(32, 527, 'ER-диаграмма · PostgreSQL', 11)
 box(32, 480, 214, 'categories | Категории', [
     'PK  id: bigint', 'UQ  name: varchar(100)'])
 box(32, 327, 214, 'brands | Бренды', [
