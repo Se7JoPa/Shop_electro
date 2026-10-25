@@ -1,16 +1,8 @@
 .env
 .venv/
-venv/
 __pycache__/
 *.pyc
-.DS_Store
 data/
 *.sqlite3
-*.sqlite3-journal
-*.sqlite3-wal
-*.sqlite3-shm
 *.key
-.qa-preview.py
-package.json
-.qa-dist/
-.openai/
+.DS_Store

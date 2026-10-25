@@ -1,2 +1,0 @@
-{% extends 'base.html' %}
-{% block content %}<section class="panel confirm-panel"><span class="eyebrow">ОШИБКА {{ code }}</span><h1>Не удалось открыть страницу</h1><p>{{ message }}</p><a class="button" href="{{ url_for('catalog') if g.user else url_for('login') }}">{{ 'В каталог' if g.user else 'На страницу входа' }}</a></section>{% endblock %}
