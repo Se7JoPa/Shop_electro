@@ -12,7 +12,7 @@ class WebTests(unittest.TestCase):
         self.path = Path(self.temp.name) / 'shop.sqlite3'
         self.app = create_app(self.path, {'TESTING': True, 'SECRET_KEY': 'test-only-key'})
         self.store = self.app.extensions['store']
-        self.store.create_first_admin('admin', 'password123', 'Учебный проект')
+        self.store.create_first_admin('admin', 'password123', 'Магазин электроники')
         self.client = self.app.test_client()
 
     def tearDown(self):

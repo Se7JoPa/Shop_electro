@@ -41,12 +41,12 @@ CREATE INDEX products_brand_idx ON products(brand_id);
 INSERT INTO categories(name) VALUES ('Смартфоны'), ('Ноутбуки'), ('Мониторы'), ('Наушники');
 INSERT INTO brands(name) VALUES ('Samsung'), ('Apple'), ('Lenovo'), ('ASUS'), ('Sony');
 INSERT INTO products(name, description, price_cents, stock, category_id, brand_id) VALUES
-('Samsung Galaxy A55', 'Учебный пример смартфона. Цена условная.', 3499000, 12, 1, 1),
-('Apple iPhone 15', 'Учебный пример смартфона. Цена условная.', 6999000, 5, 1, 2),
-('Lenovo IdeaPad Slim 3', 'Ноутбук для учёбы и работы. Цена условная.', 5299000, 7, 2, 3),
-('ASUS TUF Gaming', 'Игровой ноутбук. Цена условная.', 8999000, 3, 2, 4),
-('Samsung Odyssey G5', 'Игровой монитор. Цена условная.', 2799000, 0, 3, 1),
-('Sony WH-1000XM5', 'Беспроводные наушники. Цена условная.', 2999000, 9, 4, 5);
+('Samsung Galaxy A55', 'Смартфон.', 3499000, 12, 1, 1),
+('Apple iPhone 15', 'Смартфон.', 6999000, 5, 1, 2),
+('Lenovo IdeaPad Slim 3', 'Ноутбук для учёбы и работы.', 5299000, 7, 2, 3),
+('ASUS TUF Gaming', 'Игровой ноутбук.', 8999000, 3, 2, 4),
+('Samsung Odyssey G5', 'Игровой монитор.', 2799000, 0, 3, 1),
+('Sony WH-1000XM5', 'Беспроводные наушники.', 2999000, 9, 4, 5);
 INSERT INTO product_specs(product_id, name, value) VALUES
 (1, 'Память', '128 ГБ'), (1, 'Оперативная память', '8 ГБ'),
 (2, 'Память', '128 ГБ'), (3, 'SSD', '512 ГБ'),

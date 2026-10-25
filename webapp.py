@@ -1,4 +1,4 @@
-"""Local browser edition. Author: Учебный проект."""
+"""Local browser edition. Author: Магазин электроники."""
 import hmac
 import os
 import secrets
