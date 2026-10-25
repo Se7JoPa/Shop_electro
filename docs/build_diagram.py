@@ -50,22 +50,22 @@ def connection(points, label, label_x, label_y):
 
 
 text(32, 551, 'Магазин электроники', 24, '#123364')
-text(32, 527, 'ER-диаграмма · PostgreSQL · Учебный проект', 11)
+text(32, 527, 'ER-диаграмма · SQLite · Учебный проект', 11)
 box(32, 480, 214, 'categories | Категории', [
-    'PK  id: bigint', 'UQ  name: varchar(100)'])
+    'PK  id: INTEGER', 'UQ  name: varchar(100)'])
 box(32, 327, 214, 'brands | Бренды', [
-    'PK  id: bigint', 'UQ  name: varchar(100)'])
+    'PK  id: INTEGER', 'UQ  name: varchar(100)'])
 box(300, 480, 235, 'products | Товары', [
-    'PK  id: bigint', 'name: varchar(200)', 'description: text',
-    'price: numeric(12,2) >= 0', 'stock: integer >= 0',
-    'FK  category_id: bigint', 'FK  brand_id: bigint', 'created_at: timestamptz'])
+    'PK  id: INTEGER', 'name: varchar(200)', 'description: text',
+    'price_cents: INTEGER >= 0', 'stock: integer >= 0',
+    'FK  category_id: INTEGER', 'FK  brand_id: INTEGER', 'created_at: TEXT (UTC)'])
 box(587, 480, 222, 'product_specs | Характеристики', [
-    'PK  id: bigint', 'FK  product_id: bigint',
+    'PK  id: INTEGER', 'FK  product_id: INTEGER',
     'name: varchar(100)', 'value: varchar(500)', 'UQ  (product_id, name)'])
 box(587, 313, 222, 'users | Пользователи', [
-    'PK  id: bigint', 'UQ  username: varchar(50)',
+    'PK  id: INTEGER', 'UQ  username: varchar(50)',
     'password_hash: text', 'full_name: varchar(150)',
-    "role: admin / customer", 'accent_color: varchar(7)', 'created_at: timestamptz'])
+    "role: admin / customer", 'accent_color: varchar(7)', 'created_at: TEXT (UTC)'])
 connection([(246, 435), (268, 435), (268, 338), (300, 338)], '1:N', 251, 447)
 connection([(246, 282), (280, 282), (280, 319), (300, 319)], '1:N', 250, 268)
 connection([(535, 414), (558, 414), (558, 414), (587, 414)], '1:N', 541, 426)
@@ -73,11 +73,11 @@ text(32, 225, 'Правила связей', 11, '#123364')
 text(32, 203, 'Категория и бренд обязательны для каждого товара.', 9)
 text(32, 185, 'Удаление используемой категории / бренда: RESTRICT.', 9)
 text(32, 167, 'Удаление товара удаляет его характеристики: CASCADE.', 9)
-text(32, 149, 'Пользователи не связаны с каталогом внешним ключом:', 9)
-text(32, 131, 'роль управляет доступом в программе; заказов в этой версии нет.', 9)
+text(32, 149, 'Цена хранится целым числом копеек, в окне показаны рубли.', 9)
+text(32, 131, 'users: доступ и цвет. Связей с каталогом нет; заказов нет.', 9)
 c.setStrokeColor('#d7e1ef')
 c.line(32, 77, 809, 77)
 text(32, 57, 'PK - первичный ключ    FK - внешний ключ    UQ - уникальность    1:N - один ко многим', 9)
-text(32, 39, 'Все поля NOT NULL. id формируется автоматически. Полная реализация: schema.sql.', 9)
+text(32, 39, 'Все поля NOT NULL. FK включаются в каждом соединении. Схема: schema.sql.', 9)
 c.showPage()
 c.save()

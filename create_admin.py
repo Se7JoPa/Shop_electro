@@ -3,7 +3,7 @@ import getpass
 import re
 from db import Store
 from security import hash_password
-import psycopg
+import sqlite3
 
 
 def main():
@@ -17,7 +17,7 @@ def main():
     if password != getpass.getpass('Повторите пароль: '):
         raise ValueError('Пароли не совпадают.')
     with Store().connect() as conn:
-        conn.execute('INSERT INTO users(username,password_hash,full_name,role) VALUES (%s,%s,%s,%s)',
+        conn.execute('INSERT INTO users(username,password_hash,full_name,role) VALUES (?,?,?,?)',
                      (username, hash_password(password), name, 'admin'))
     print('Администратор создан. Запустите python app.py')
 
@@ -25,6 +25,6 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-    except (ValueError, psycopg.Error) as error:
+    except (ValueError, sqlite3.Error) as error:
         print('Не удалось создать администратора:', error)
         raise SystemExit(1)

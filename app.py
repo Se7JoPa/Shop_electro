@@ -1,7 +1,7 @@
 """Desktop electronics catalogue. Author: Учебный проект."""
 import sys
 from decimal import Decimal
-import psycopg
+import sqlite3
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (
@@ -14,10 +14,10 @@ from db import Store
 
 
 def error_message(parent, error):
-    if isinstance(error, psycopg.errors.UniqueViolation):
-        text = 'Такая запись уже существует. Проверьте логин или названия характеристик.'
-    elif isinstance(error, psycopg.Error):
-        text = 'Ошибка базы данных. Проверьте запуск PostgreSQL, файл .env и выполнение schema.sql.'
+    if isinstance(error, sqlite3.IntegrityError):
+        text = 'Нарушено ограничение базы данных. Проверьте логин, характеристики и связанные записи.'
+    elif isinstance(error, sqlite3.Error):
+        text = 'Ошибка SQLite. Проверьте доступ к папке data и файлу базы. Если база открыта другой программой, закройте её и повторите.'
     else:
         text = str(error)
     QMessageBox.warning(parent, 'Не удалось выполнить действие', text)
@@ -27,7 +27,7 @@ def guarded(method):
     def wrapper(self, *args, **kwargs):
         try:
             return method(self, *args, **kwargs)
-        except (psycopg.Error, ValueError, PermissionError) as error:
+        except (sqlite3.Error, ValueError, PermissionError, OSError) as error:
             error_message(self, error)
     return wrapper
 
@@ -52,10 +52,11 @@ def apply_style(app, color='#2563eb'):
 
 
 class Registration(QDialog):
-    def __init__(self, store, parent):
+    def __init__(self, store, parent=None, first_admin=False):
         super().__init__(parent)
         self.store = store
-        self.setWindowTitle('Регистрация покупателя')
+        self.first_admin = first_admin
+        self.setWindowTitle('Первый запуск | Создание администратора' if first_admin else 'Регистрация покупателя')
         self.setMinimumWidth(400)
         form = QFormLayout(self)
         self.name, self.login, self.password, self.repeat = [QLineEdit() for _ in range(4)]
@@ -73,7 +74,8 @@ class Registration(QDialog):
     def submit(self):
         if self.password.text() != self.repeat.text():
             raise ValueError('Пароли не совпадают.')
-        self.store.register(self.login.text(), self.password.text(), self.name.text())
+        method = self.store.create_first_admin if self.first_admin else self.store.register
+        method(self.login.text(), self.password.text(), self.name.text())
         QMessageBox.information(self, 'Готово', 'Аккаунт создан. Теперь можно войти.')
         self.accept()
 
@@ -341,9 +343,18 @@ def main():
     app = QApplication(sys.argv)
     app.setApplicationName('ElectronicsShop')
     app.setStyle('Fusion')
+    apply_style(app)
     # Main loop also supports logging out and signing in with another account.
     app.setQuitOnLastWindowClosed(False)
-    store = Store()
+    try:
+        store = Store()
+        if not store.has_users():
+            setup = Registration(store, first_admin=True)
+            if setup.exec() != QDialog.DialogCode.Accepted:
+                return 0
+    except (sqlite3.Error, OSError, ValueError) as error:
+        error_message(None, error)
+        return 1
     while True:
         apply_style(app)
         login = Login(store)
@@ -351,7 +362,7 @@ def main():
             break
         try:
             window = Catalog(store, login.user)
-        except (psycopg.Error, ValueError) as error:
+        except (sqlite3.Error, ValueError) as error:
             error_message(login, error)
             continue
         window.show()
