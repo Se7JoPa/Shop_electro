@@ -9,3 +9,8 @@ data/
 *.sqlite3-journal
 *.sqlite3-wal
 *.sqlite3-shm
+*.key
+.qa-preview.py
+package.json
+.qa-dist/
+.openai/

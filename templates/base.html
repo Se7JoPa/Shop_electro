@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Магазин электроники{% endblock %}</title>
+<link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>:root{--accent:{{ accent }};--accent-text:{{ accent_text }}}</style>
+</head>
+<body>
+<header class="topbar"><div class="shell topbar-inner">
+<a class="brand" href="{{ url_for('catalog') }}"><span class="brand-mark">E<span>↗</span></span><span>Электроника<small>ТЕХНИКА ДЛЯ КАЖДОГО ДНЯ</small></span></a>
+{% if g.user %}<nav class="nav"><a class="{{ 'active' if request.endpoint in ['catalog','detail','new_product','edit_product'] }}" href="{{ url_for('catalog') }}">Каталог</a><a class="{{ 'active' if request.endpoint == 'settings' }}" href="{{ url_for('settings') }}">Оформление</a></nav>
+<div class="user"><span class="avatar">{{ g.user.full_name[:1]|upper }}</span><span>{{ g.user.full_name }}<small>{{ 'Администратор' if g.user.role == 'admin' else 'Покупатель' }}</small></span></div>
+<form action="{{ url_for('logout') }}" method="post"><input type="hidden" name="csrf" value="{{ csrf_token() }}"><button class="button small ghost" type="submit">Выйти</button></form>
+{% else %}<span class="header-note">Ваш магазин. Всё под рукой.</span>{% endif %}
+</div></header>
+<main class="shell">
+{% with messages=get_flashed_messages(with_categories=true) %}{% for category,message in messages %}<div class="notice {{ category }}" role="status">{{ message }}</div>{% endfor %}{% endwith %}
+{% if error %}<div class="notice error" role="alert">{{ error }}</div>{% endif %}
+{% block content %}{% endblock %}
+</main>
+<footer class="shell footer"><span>Электроника <span class="dot">·</span> Учебный магазин</span><span>Учебный проект</span></footer>
+</body></html>

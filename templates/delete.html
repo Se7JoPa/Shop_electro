@@ -1,0 +1,2 @@
+{% extends 'base.html' %}
+{% block content %}<section class="panel confirm-panel"><span class="warning-symbol">!</span><h1>Удалить товар?</h1><p>«{{ product.name }}» и его характеристики будут удалены из базы. Отменить это действие после удаления нельзя.</p><form method="post" class="action-row"><input type="hidden" name="csrf" value="{{ csrf_token() }}"><a class="button ghost" href="{{ url_for('detail',product_id=product.id) }}">Оставить товар</a><button class="button danger" type="submit">Да, удалить</button></form></section>{% endblock %}

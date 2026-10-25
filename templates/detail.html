@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }} | Электроника{% endblock %}
+{% block content %}
+<div class="breadcrumb"><a href="{{ url_for('catalog') }}">Каталог</a><span>/</span>{{ product.category }}</div>
+<section class="detail-grid"><div class="detail-image tint-{{ product.category_id % 4 }}"><img src="{{ url_for('static',filename=('phone.svg' if product.category_id == 1 else ('laptop.svg' if product.category_id == 2 else ('monitor.svg' if product.category_id == 3 else 'headphones.svg')))) }}" alt="Иллюстрация категории {{ product.category }}"></div>
+<div class="detail-summary"><span class="eyebrow">{{ product.brand }} <span>·</span> ТОВАР #{{ product.id }}</span><h1>{{ product.name }}</h1><span class="stock {{ 'out' if product.stock == 0 }}">{{ 'В наличии: ' ~ product.stock ~ ' шт.' if product.stock else 'Нет в наличии' }}</span><p class="big-price">{{ product.price|money }} <span>₽</span></p><p class="description">{{ product.description or 'Описание пока не добавлено.' }}</p><div class="action-row">{% if g.user.role == 'admin' %}<a class="button" href="{{ url_for('edit_product',product_id=product.id) }}">Редактировать</a><a class="button danger-soft" href="{{ url_for('delete_product',product_id=product.id) }}">Удалить товар</a>{% else %}<a class="button secondary" href="{{ url_for('catalog') }}">Вернуться в каталог</a>{% endif %}</div></div></section>
+<section class="panel specs-panel"><h2>Характеристики</h2>{% if specs %}<dl>{% for spec in specs %}<div><dt>{{ spec.name }}</dt><dd>{{ spec.value }}</dd></div>{% endfor %}</dl>{% else %}<p class="muted">Характеристики пока не указаны.</p>{% endif %}</section>
+{% endblock %}
