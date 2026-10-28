@@ -47,8 +47,16 @@ def create_app(database_path=None, test_config=None):
             session['csrf'] = secrets.token_urlsafe(32)
         return session['csrf']
 
+    def reset_auth_session():
+        layout = session.get('layout', 'grid')
+        session.clear()
+        session['layout'] = layout
+
     @app.before_request
     def load_user_and_csrf():
+        requested_layout = request.args.get('view')
+        if requested_layout in ('grid', 'vertical'):
+            session['layout'] = requested_layout
         g.user = None
         user_id = session.get('user_id')
         if isinstance(user_id, int):
@@ -109,7 +117,14 @@ def create_app(database_path=None, test_config=None):
         rgb = [int(accent[i:i + 2], 16) / 255 for i in (1, 3, 5)]
         linear = [v / 12.92 if v <= .04045 else ((v + .055) / 1.055) ** 2.4 for v in rgb]
         luminance = sum(v * w for v, w in zip(linear, (.2126, .7152, .0722)))
+        def catalog_view_url(mode):
+            params = {key: request.args[key] for key in
+                      ('q', 'category', 'brand', 'low', 'high', 'available', 'sort')
+                      if key in request.args and request.endpoint == 'catalog'}
+            return url_for('catalog', view=mode, **params)
+
         return dict(csrf_token=csrf_token, accent=accent,
+                    layout=session.get('layout', 'grid'), view_url=catalog_view_url,
                     accent_text='#111827' if luminance > .179 else '#ffffff')
 
     @app.route('/setup', methods=['GET', 'POST'])
@@ -122,7 +137,7 @@ def create_app(database_path=None, test_config=None):
                 if request.form.get('password') != request.form.get('repeat'):
                     raise ValueError('Пароли не совпадают.')
                 store.create_first_admin(request.form.get('username', ''), request.form.get('password', ''), request.form.get('full_name', ''))
-                session.clear()
+                reset_auth_session()
                 flash('Администратор создан. Войдите с указанными данными.', 'success')
                 return redirect(url_for('login'))
             except ValueError as exc:
@@ -139,7 +154,7 @@ def create_app(database_path=None, test_config=None):
         if request.method == 'POST':
             user = store.authenticate(request.form.get('username', ''), request.form.get('password', ''))
             if user:
-                session.clear()
+                reset_auth_session()
                 session['user_id'] = user['id']
                 session.permanent = True
                 return redirect(url_for('catalog'))
@@ -158,7 +173,7 @@ def create_app(database_path=None, test_config=None):
                 if request.form.get('password') != request.form.get('repeat'):
                     raise ValueError('Пароли не совпадают.')
                 store.register(request.form.get('username', ''), request.form.get('password', ''), request.form.get('full_name', ''))
-                session.clear()
+                reset_auth_session()
                 flash('Аккаунт создан. Теперь можно войти.', 'success')
                 return redirect(url_for('login'))
             except ValueError as exc:
@@ -169,7 +184,7 @@ def create_app(database_path=None, test_config=None):
 
     @app.post('/logout')
     def logout():
-        session.clear()
+        reset_auth_session()
         return redirect(url_for('login'))
 
     @app.get('/')

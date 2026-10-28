@@ -4,9 +4,10 @@
 <title>{% block title %}Магазин электроники{% endblock %}</title>
 <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% if layout == 'vertical' %}<link rel="stylesheet" href="{{ url_for('static', filename='vertical.css') }}">{% endif %}
 <style>:root{--accent:{{ accent }};--accent-text:{{ accent_text }}}</style>
 </head>
-<body>
+<body class="layout-{{ layout }}">
 <header class="topbar"><div class="shell topbar-inner">
 <a class="brand" href="{{ url_for('catalog') }}"><span class="brand-mark">E<span>↗</span></span><span>Электроника<small>ТЕХНИКА ДЛЯ КАЖДОГО ДНЯ</small></span></a>
 {% if g.user %}<nav class="nav"><a class="{{ 'active' if request.endpoint in ['catalog','detail','new_product','edit_product'] }}" href="{{ url_for('catalog') }}">Каталог</a><a class="{{ 'active' if request.endpoint == 'settings' }}" href="{{ url_for('settings') }}">Оформление</a></nav>

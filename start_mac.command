@@ -11,4 +11,4 @@ fi
 if ! .venv/bin/python -c 'import flask' >/dev/null 2>&1; then
     .venv/bin/python -m pip install -r requirements.txt
 fi
-exec .venv/bin/python run.py
+exec .venv/bin/python run.py "$@"

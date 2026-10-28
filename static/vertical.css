@@ -1,0 +1,79 @@
+/* A portrait layout, including on wide desktop screens. */
+html{background:#e7edf6}
+body.layout-vertical{width:100%;max-width:520px;min-height:100vh;margin:0 auto;background:#f6f8fc;box-shadow:0 0 0 1px #dce4f0,0 12px 60px #20355012}
+.layout-vertical .shell{width:100%;max-width:520px;padding-left:22px;padding-right:22px}
+.layout-vertical .topbar-inner{height:auto;min-height:90px;flex-wrap:wrap;gap:14px 10px;padding-top:18px;padding-bottom:12px}
+.layout-vertical .brand{font-size:19px;gap:10px}
+.layout-vertical .brand small{font-size:7px;letter-spacing:1.2px}
+.layout-vertical .brand-mark{width:36px;height:38px;font-size:25px}
+.layout-vertical .nav{order:3;flex-basis:100%;height:35px;gap:28px;margin-left:0}
+.layout-vertical .user{margin-left:auto}
+.layout-vertical .user>span:last-child{display:none}
+.layout-vertical .avatar{width:30px;height:30px}
+.layout-vertical .header-note{display:none}
+.layout-vertical .page-heading{display:block;margin:28px 0 20px}
+.layout-vertical h1{font-size:30px;letter-spacing:-1px}
+.layout-vertical .page-heading .muted{font-size:13px}
+.layout-vertical .heading-actions{display:flex;justify-content:space-between;gap:12px;margin-top:20px;align-items:center}
+.layout-vertical .heading-actions>.button{padding:11px 13px;font-size:11px}
+.layout-vertical .view-switch{flex:0 1 auto}
+.layout-vertical .view-switch a{font-size:11px;padding:8px 10px}
+.layout-vertical .catalog-layout{display:block}
+.layout-vertical .filter-panel{position:static;display:block;margin:0 0 18px;padding:0}
+.layout-vertical .filter-disclosure{display:block;padding:0 18px}
+.layout-vertical .filter-disclosure>summary{padding:16px 0;font-weight:650;font-size:13px;cursor:pointer;list-style-position:inside}
+.layout-vertical .filter-disclosure>summary>span{display:block;padding-left:16px;margin-top:3px;font-size:11px;color:#8c99ab;font-weight:400}
+.layout-vertical .filter-disclosure[open]{padding-bottom:18px}
+.layout-vertical .filter-disclosure[open]>summary{border-bottom:1px solid #edf0f5;margin-bottom:14px}
+.layout-vertical .filter-heading{justify-content:flex-end;margin-bottom:15px}
+.layout-vertical .filter-heading h2{display:none}
+.layout-vertical .filter-disclosure>label,.layout-vertical .filter-disclosure>fieldset{margin-bottom:19px}
+.layout-vertical .filter-disclosure select{font-size:13px}
+.layout-vertical .filter-foot{display:none}
+.layout-vertical .price-range{gap:10px}
+.layout-vertical .search-row{gap:8px}
+.layout-vertical .search{padding:0 10px}
+.layout-vertical .search input{font-size:12px;padding-left:9px}
+.layout-vertical .search-row>.button{font-size:12px;padding:12px 15px}
+.layout-vertical .results-bar{align-items:center;margin:18px 0}
+.layout-vertical .sort{display:flex;flex-direction:column;align-items:flex-end;gap:0;font-size:10px}
+.layout-vertical .sort select{padding:4px 0;font-size:11px;max-width:170px}
+.layout-vertical .product-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+.layout-vertical .product-card{width:100%;min-width:0;border-radius:15px}
+.layout-vertical .product-visual{height:248px;margin:10px 10px 0;border-radius:10px}
+.layout-vertical .product-visual img{height:85%;width:78%;margin-top:14px}
+.layout-vertical .category-tag{font-size:10px;left:14px;top:13px;padding:5px 8px}
+.layout-vertical .product-body{padding:19px 21px 21px}
+.layout-vertical .product-meta{display:flex;font-size:11px;gap:12px}
+.layout-vertical .stock{display:inline;font-size:11px;margin-top:0}
+.layout-vertical .product-card h2{min-height:0;font-size:19px;line-height:1.4;margin:12px 0 13px}
+.layout-vertical .product-price{font-size:27px;margin-bottom:17px}
+.layout-vertical .product-price>span{font-size:20px}
+.layout-vertical .card-actions{display:flex;flex-direction:row;align-items:center;gap:16px}
+.layout-vertical .card-actions .button{font-size:12px;padding:11px 16px;min-width:145px}
+.layout-vertical .edit-link{font-size:12px;padding:7px 0}
+.layout-vertical .catalog-note{font-size:10px;line-height:1.6}
+.layout-vertical .detail-grid{grid-template-columns:minmax(0,1fr);gap:18px;margin:22px 0 27px}
+.layout-vertical .detail-image{min-height:280px}
+.layout-vertical .detail-image img{width:78%;height:260px}
+.layout-vertical .detail-summary{padding:7px 0}
+.layout-vertical .detail-summary h1{font-size:30px}
+.layout-vertical .specs-panel{padding:21px}
+.layout-vertical .specs-panel dl>div{grid-template-columns:1fr 1fr;gap:15px}
+.layout-vertical .editor{padding:22px}
+.layout-vertical .editor-fields{grid-template-columns:minmax(0,1fr);gap:20px}
+.layout-vertical .editor-fields .wide{grid-column:auto}
+.layout-vertical .editor-footer{gap:10px}
+.layout-vertical .settings-grid{grid-template-columns:minmax(0,1fr);gap:20px}
+.layout-vertical .settings-panel,.layout-vertical .settings-preview{padding:25px}
+.layout-vertical .auth-layout{display:block;margin:29px auto 35px;max-width:100%}
+.layout-vertical .auth-intro{margin-bottom:25px}
+.layout-vertical .auth-intro h1{font-size:35px;line-height:1.15;letter-spacing:-1.2px;margin-bottom:12px}
+.layout-vertical .auth-intro h1 br{display:none}
+.layout-vertical .auth-intro>p,.layout-vertical .auth-art,.layout-vertical .auth-tags{display:none}
+.layout-vertical .auth-panel{padding:25px}
+.layout-vertical .auth-panel h2{font-size:24px}
+.layout-vertical .confirm-panel{margin:35px auto;padding:26px 21px}
+.layout-vertical .confirm-panel h1{font-size:28px}
+.layout-vertical .footer{display:flex;flex-direction:column;gap:4px;margin-top:35px;padding-top:19px;padding-bottom:22px}
+@media(max-width:400px){.layout-vertical .shell{padding-left:16px;padding-right:16px}.layout-vertical .avatar{display:none}.layout-vertical .heading-actions{align-items:stretch;gap:10px}.layout-vertical .heading-actions>.button{font-size:10px;padding:10px}.layout-vertical .view-switch a{font-size:10px;padding:8px}.layout-vertical .product-visual{height:215px}.layout-vertical .product-body{padding:18px}.layout-vertical h1{font-size:28px}.layout-vertical .brand{font-size:18px}.layout-vertical .auth-panel{padding:21px}}
