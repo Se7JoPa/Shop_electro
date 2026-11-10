@@ -52,4 +52,26 @@ INSERT INTO product_specs(product_id, name, value) VALUES
 (2, 'Память', '128 ГБ'), (3, 'SSD', '512 ГБ'),
 (4, 'Оперативная память', '16 ГБ'), (5, 'Диагональ', '27 дюймов'),
 (6, 'Подключение', 'Bluetooth');
+CREATE TABLE orders (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
+    customer_name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    address TEXT NOT NULL,
+    comment TEXT NOT NULL DEFAULT '',
+    total_cents INTEGER NOT NULL CHECK (total_cents >= 0),
+    payment_method TEXT NOT NULL CHECK (payment_method IN ('card','cash')),
+    status TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE order_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id INTEGER NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+    product_id INTEGER REFERENCES products(id) ON DELETE SET NULL,
+    product_name TEXT NOT NULL,
+    unit_price_cents INTEGER NOT NULL CHECK (unit_price_cents >= 0),
+    quantity INTEGER NOT NULL CHECK (quantity > 0)
+);
+CREATE INDEX orders_user_idx ON orders(user_id);
+CREATE INDEX order_items_order_idx ON order_items(order_id);
 PRAGMA user_version=1;
