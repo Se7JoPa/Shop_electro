@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Оплата · Магазин электроники{% endblock %}
+{% block content %}
+<div class="page-heading payment-heading"><div><div class="breadcrumb"><a href="{{ url_for('catalog') }}">Главная</a><span>/</span> Оплата</div><h1>Оплата заказа<span class="heading-dot">.</span></h1><p class="muted">Демонстрационная форма для учебного проекта.</p></div><span class="demo-label">УЧЕБНЫЙ РЕЖИМ</span></div>
+<div class="payment-layout">
+<section class="panel payment-panel">
+<div class="payment-panel-head"><div><span class="eyebrow">DEMO CHECKOUT</span><h2>Данные карты</h2><p>Заполните форму, чтобы увидеть сценарий оплаты.</p></div><span class="lock-mark">▣</span></div>
+<div class="demo-card" aria-live="polite">
+<div class="demo-card-top"><span class="chip"></span><span class="card-brand" id="card-brand">BANK CARD</span></div>
+<div class="demo-card-number" id="preview-number">•••• &nbsp; •••• &nbsp; •••• &nbsp; ••••</div>
+<div class="demo-card-bottom"><div><small>ВЛАДЕЛЕЦ КАРТЫ</small><strong id="preview-name">ВАШЕ ИМЯ</strong></div><div><small>ДЕЙСТВИТЕЛЬНА ДО</small><strong id="preview-expiry">ММ/ГГ</strong></div></div>
+</div>
+<form id="demo-payment-form" class="payment-form" autocomplete="off" novalidate>
+<div class="demo-warning"><strong>Только демонстрация.</strong> Не вводите настоящие реквизиты. Данные карты обрабатываются только в вашем браузере, не отправляются на сервер и не сохраняются.</div>
+<label>Номер карты<input id="card-number" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000" required aria-describedby="card-number-error"><small class="field-error" id="card-number-error"></small></label>
+<div class="payment-fields-row"><label>Срок действия<input id="card-expiry" inputmode="numeric" maxlength="5" placeholder="ММ/ГГ" required><small class="field-error" id="card-expiry-error"></small></label><label>CVV<input id="card-cvv" inputmode="numeric" maxlength="3" placeholder="•••" type="password" required><small class="field-error" id="card-cvv-error"></small></label></div>
+<label>Имя владельца<input id="card-holder" maxlength="40" placeholder="IVAN IVANOV" autocomplete="off" required></label>
+<button class="button full pay-button" type="submit">Оплатить 12 990 ₽ <span>→</span></button>
+<p class="payment-footnote">После нажатия появится учебный результат. Реального списания средств не происходит.</p>
+</form>
+<div id="payment-result" class="payment-result" role="status" aria-live="polite" hidden><span class="result-check">✓</span><span class="eyebrow">DEMO PAYMENT</span><h2>Оплата прошла успешно!</h2><p>Это демонстрационный чек. Деньги не списывались.</p><div class="receipt-line"><span>Номер операции</span><strong id="receipt-id"></strong></div><div class="receipt-line"><span>Сумма</span><strong>12 990 ₽</strong></div><div class="receipt-line"><span>Статус</span><strong class="paid-status">Успешно</strong></div><button class="button secondary full" id="reset-payment" type="button">Вернуться к форме</button></div>
+</section>
+<aside class="payment-aside"><div class="panel order-panel"><span class="eyebrow">ВАШ ЗАКАЗ</span><h2>Смартфон</h2><div class="order-product"><div class="order-device">▯</div><div><strong>Смартфон нового поколения</strong><small>Демонстрационный товар · 1 шт.</small></div></div><div class="receipt-line"><span>Товары</span><strong>12 990 ₽</strong></div><div class="receipt-line"><span>Доставка</span><strong class="free-delivery">Бесплатно</strong></div><div class="receipt-total"><span>Итого к оплате</span><strong>12 990 ₽</strong></div><div class="secure-note"><span>✓</span><p><strong>Безопасная демонстрация</strong><br>Реквизиты не покидают страницу и не записываются в базу данных.</p></div></div></aside>
+</div>
+{% endblock %}

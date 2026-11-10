@@ -272,6 +272,12 @@ def create_app(database_path=None, test_config=None):
             return redirect(url_for('catalog'))
         return render_template('delete.html', product=product)
 
+    @app.get('/payment')
+    @login_required
+    def payment_demo():
+        # Учебный макет: реквизиты карты обрабатываются только JavaScript в браузере.
+        return render_template('payment.html')
+
     @app.route('/settings', methods=['GET', 'POST'])
     @login_required
     def settings():
