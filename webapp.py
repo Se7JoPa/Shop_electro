@@ -10,6 +10,7 @@ from pathlib import Path
 from flask import Flask, abort, flash, g, redirect, render_template, request, session, url_for
 from werkzeug.exceptions import SecurityError
 from db import Store
+from commerce import register_commerce
 
 
 def persistent_secret(path):
@@ -106,6 +107,8 @@ def create_app(database_path=None, test_config=None):
         product = dict(row)
         product['price'] = Decimal(product['price_cents']) / 100
         return product
+
+    register_commerce(app, store, login_required, product_by_id)
 
     @app.template_filter('money')
     def money(value):
