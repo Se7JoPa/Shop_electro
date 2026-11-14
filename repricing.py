@@ -28,14 +28,14 @@ def register_repricing(app, store, admin_required):
                     store.require_admin(conn, g.user['id'])
                     if request.form.get('action') == 'apply':
                         conn.execute('BEGIN IMMEDIATE')
-                        result = conn.execute('UPDATE products SET price_cents=? WHERE price_cents > ? AND price_cents != ?',
+                        result = conn.execute('UPDATE products SET price_cents=? WHERE price_cents < ? AND price_cents != ?',
                                               (target_cents, minimum_cents, target_cents))
                         flash(f'Цены обновлены. Изменено товаров: {result.rowcount}.', 'success')
                         return redirect(url_for('repricing'))
                     if request.form.get('action') != 'calculate':
                         abort(400)
                     preview = [dict(row) for row in conn.execute(
-                        'SELECT id,name,price_cents FROM products WHERE price_cents > ? AND price_cents != ? ORDER BY name,id',
+                        'SELECT id,name,price_cents FROM products WHERE price_cents < ? AND price_cents != ? ORDER BY name,id',
                         (minimum_cents, target_cents))]
             except ValueError as exc:
                 error = str(exc)
