@@ -21,7 +21,7 @@
 <div class="repricing-modal-header"><div><h2 id="repricing-title">Предварительный расчёт</h2><p class="muted">Товаров с изменением цены: <strong>{{ preview|length }}</strong></p></div><a href="{{ url_for('repricing') }}" class="button secondary small" aria-label="Закрыть">Закрыть</a></div>
 <div class="repricing-table-wrap">
 <table class="repricing-table"><thead><tr><th>Товар</th><th>Текущая цена</th><th>Итоговая цена</th></tr></thead><tbody>
-{% for item in preview %}<tr><td>{{ item.name }}</td><td>{{ (item.price_cents / 100)|money }} ₽</td><td><strong>{{ new_price|replace(',', '.')|float|money }} ₽</strong></td></tr>{% else %}<tr><td colspan="3">Нет товаров, цены которых требуется изменить.</td></tr>{% endfor %}
+{% for item in preview %}<tr><td>{{ item.name }}</td><td>{{ (item.price_cents / 100)|money }} ₽</td><td><strong>{{ ('%.2f'|format(new_price|replace(',', '.')|float))|replace('.', ',') }} ₽</strong></td></tr>{% else %}<tr><td colspan="3">Нет товаров, цены которых требуется изменить.</td></tr>{% endfor %}
 </tbody></table>
 </div>
 <div class="repricing-modal-actions">
