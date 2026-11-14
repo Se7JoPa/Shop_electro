@@ -11,6 +11,7 @@ from flask import Flask, abort, flash, g, redirect, render_template, request, se
 from werkzeug.exceptions import SecurityError
 from db import Store
 from commerce import register_commerce
+from repricing import register_repricing
 
 
 def persistent_secret(path):
@@ -109,6 +110,7 @@ def create_app(database_path=None, test_config=None):
         return product
 
     register_commerce(app, store, login_required, product_by_id)
+    register_repricing(app, store, admin_required)
 
     @app.template_filter('money')
     def money(value):
