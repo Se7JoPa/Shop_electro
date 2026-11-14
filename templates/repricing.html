@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Пересчёт цен | Магазин электроники{% endblock %}
+{% block content %}
+<div class="page-heading"><div><div class="breadcrumb">Каталог <span>/</span> Пересчёт цен</div><h1>Массовый пересчёт цен<span class="heading-dot">.</span></h1><p class="muted">Изменение цен товаров ниже указанного порога.</p></div></div>
+<section class="panel repricing-panel">
+<form method="post" id="reprice-calc">
+<input type="hidden" name="csrf" value="{{ csrf_token() }}">
+<input type="hidden" name="action" value="calculate">
+<div class="repricing-fields">
+<label>Минимальная цена, ₽<input name="minimum" type="text" inputmode="decimal" required placeholder="Например, 10000" value="{{ minimum }}" maxlength="20"></label>
+<label>Установить новую цену, ₽<input name="new_price" type="text" inputmode="decimal" required placeholder="Например, 15000" value="{{ new_price }}" maxlength="20"></label>
+</div>
+<p class="muted">Будут выбраны только товары, цена которых строго ниже минимальной. Расчёт ничего не изменяет.</p>
+<button class="button" type="submit">Расчёт</button>
+<a class="button secondary" href="{{ url_for('catalog') }}">Назад в каталог</a>
+</form>
+</section>
+{% if calculated %}
+<div class="repricing-overlay" role="presentation">
+<section class="repricing-modal panel" role="dialog" aria-modal="true" aria-labelledby="repricing-title">
+<div class="repricing-modal-header"><div><h2 id="repricing-title">Предварительный расчёт</h2><p class="muted">Товаров с изменением цены: <strong>{{ preview|length }}</strong></p></div><a href="{{ url_for('repricing') }}" class="button secondary small" aria-label="Закрыть">Закрыть</a></div>
+<div class="repricing-table-wrap">
+<table class="repricing-table"><thead><tr><th>Товар</th><th>Текущая цена</th><th>Итоговая цена</th></tr></thead><tbody>
+{% for item in preview %}<tr><td>{{ item.name }}</td><td>{{ (item.price_cents / 100)|money }} ₽</td><td><strong>{{ ('%.2f'|format(new_price|replace(',', '.')|float))|replace('.', ',') }} ₽</strong></td></tr>{% else %}<tr><td colspan="3">Нет товаров, цены которых требуется изменить.</td></tr>{% endfor %}
+</tbody></table>
+</div>
+<div class="repricing-modal-actions">
+<a class="button secondary" href="{{ url_for('repricing') }}">Отмена</a>
+{% if preview %}<form method="post"><input type="hidden" name="csrf" value="{{ csrf_token() }}"><input type="hidden" name="action" value="apply"><input type="hidden" name="minimum" value="{{ minimum }}"><input type="hidden" name="new_price" value="{{ new_price }}"><button class="button" type="submit">Применить цены</button></form>{% endif %}
+</div>
+</section></div>
+{% endif %}
+{% endblock %}

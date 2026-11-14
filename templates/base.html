@@ -5,6 +5,7 @@
 <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='commerce.css') }}">
 {% if layout == 'vertical' %}<link rel="stylesheet" href="{{ url_for('static', filename='vertical.css') }}">{% endif %}
+{% if request.endpoint == 'repricing' %}<link rel="stylesheet" href="{{ url_for('static', filename='repricing.css') }}">{% endif %}
 {% if request.endpoint == 'payment_order' %}<link rel="stylesheet" href="{{ url_for('static', filename='payment.css') }}">{% endif %}
 <style>:root{--accent:{{ accent }};--accent-text:{{ accent_text }}}</style>
 </head>
